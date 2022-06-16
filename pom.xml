@@ -58,18 +58,21 @@
 			<url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
 		</license>
 	</licenses>
+
 	<distributionManagement>
 		<repository>
-			<id>releases</id>
+			<id>cargo-nexus-releases</id>
 			<name>Cargo Release Repository</name>
-			<url>http://192.168.2.133:8081/nexus/content/repositories/releases/</url>
+			<url>http://192.168.2.232:8081/repository/releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshots</id>
+			<id>cargo-nexus-snapshots</id>
 			<name>Cargo Snapshot Repository</name>
-			<url>http://192.168.2.133:8081/nexus/content/repositories/snapshots/</url>
+			<url>http://192.168.2.232:8081/repository/snapshots/</url>
+			<uniqueVersion>true</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
+
 	<developers>
 		<developer>
 			<id>flyTiger</id>
@@ -108,7 +111,8 @@
     <properties>
         <ant.version>1.10.7</ant.version>
         <commons-collections.version>4.4</commons-collections.version>
-        <eclipse-jdt-core.version>3.21.0</eclipse-jdt-core.version>
+		<!-- 1.7 is the last google-java-format version that is compiled against Java 1.8 -->
+		<google-java-format.version>1.7</google-java-format.version>
         <freemarker.version>2.3.30</freemarker.version>
         <h2.version>1.4.200</h2.version>
         <hibernate-commons-annotations.version>5.1.0.Final</hibernate-commons-annotations.version>
@@ -182,11 +186,11 @@
 		        <artifactId>commons-collections4</artifactId>
 		        <version>${commons-collections.version}</version>
 	        </dependency>
-            <dependency>
-                <groupId>org.eclipse.jdt</groupId>
-                <artifactId>org.eclipse.jdt.core</artifactId>
-                <version>${eclipse-jdt-core.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>com.google.googlejavaformat</groupId>
+				<artifactId>google-java-format</artifactId>
+				<version>${google-java-format.version}</version>
+			</dependency>
 		    <dependency>
 			    <groupId>org.freemarker</groupId>
 			    <artifactId>freemarker</artifactId>
