@@ -59,7 +59,31 @@
 		</license>
 	</licenses>
 
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Cargo Release Repository</name>
+			<url>http://192.168.2.133:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Cargo Snapshot Repository</name>
+			<url>http://192.168.2.133:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<developers>
+		<developer>
+			<id>flyTiger</id>
+			<name>LFH</name>
+			<email>www.fhtiger.com</email>
+			<url>http://www.fhtiger.com</url>
+			<organization>JAVA-O</organization>
+			<roles>
+				<role>user</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
 		<developer>
 			<id>maxandersen</id>
 			<name>Max Andersen</name>
@@ -77,8 +101,8 @@
     <modules>
         <module>orm</module>
         <module>maven</module>
-        <module>ant</module>
-        <module>test</module>
+<!--        <module>ant</module>-->
+<!--        <module>test</module>-->
         <module>utils</module>
     </modules>
 
@@ -218,5 +242,66 @@
             </dependency>
          </dependencies>
     </dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
 
+				<!-- Check for the minimum version of Java and Maven.  Runs during the validate phase. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+		<plugins>
+
+			<!-- Check for the minimum version of Java and Maven.  Runs during the validate phase. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce-java-version</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedRepositories>
+									<!--修改验证等级，保证编译-->
+									<level>WARN</level>
+									<bannedRepositories>
+										<bannedRepository>http://*</bannedRepository>
+									</bannedRepositories>
+									<bannedPluginRepositories>
+										<bannedPluginRepository>http://*</bannedPluginRepository>
+									</bannedPluginRepositories>
+								</bannedRepositories>
+								<requireJavaVersion>
+									<message>To build this project JDK ${jdk.min.version} (or greater) is required. Please install it.</message>
+									<version>${jdk.min.version}</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+					<execution>
+						<id>enforce-maven-version</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<message>To build this project Maven ${maven.min.version} (or greater) is required. Please install it.</message>
+									<version>${maven.min.version}</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>
